@@ -16,8 +16,16 @@ int main()
 
 	// set street class
 	Nodes::Bezier bez;
-	bez.set_Nodes(0, 0, 150, 50, 550, 300, 400, 450);
-	bez.create_bezier(10);
+	Nodes::Node node1;
+	node1.set_pos(20, 20);
+	Nodes::Node node2;
+	node2.set_pos(200, 20);
+	Nodes::Node node3;
+	node3.set_pos(100, 200);
+	Nodes::Node node4;
+	node4.set_pos(250, 200);
+	bez.add_Nodes({node1, node2, node3, node4});
+	bez.create_bezier(50);
 
 	// Window_loop
 	while (window->isOpen()) 

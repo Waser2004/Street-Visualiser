@@ -1,12 +1,30 @@
 ﻿  Main.cpp
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(49,7): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(50,7): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(138,79): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(24,7): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(25,7): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(57,31): warning C4244: "Argument": Konvertierung von "_Ty" in "_Ty", möglicher Datenverlust
+          with
+          [
+              _Ty=float
+          ]
+          and
+          [
+              _Ty=int
+          ]
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(58,31): warning C4244: "Argument": Konvertierung von "_Ty" in "_Ty", möglicher Datenverlust
+          with
+          [
+              _Ty=float
+          ]
+          and
+          [
+              _Ty=int
+          ]
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(88,82): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(138,61): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(88,65): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
