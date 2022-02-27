@@ -14,18 +14,15 @@ int main()
 	// set limit Framerate
 	window->setFramerateLimit(60);
 
-	// set street class
-	Nodes::Bezier bez;
-	Nodes::Node node1;
-	node1.set_pos(20, 20);
-	Nodes::Node node2;
-	node2.set_pos(200, 20);
-	Nodes::Node node3;
-	node3.set_pos(100, 200);
-	Nodes::Node node4;
-	node4.set_pos(250, 200);
-	bez.add_Nodes({node1, node2, node3, node4});
-	bez.create_bezier(50);
+	// create Street node
+	Nodes::Road_Node Node1;
+	Node1.set_pos(100, 100, 45, 2, 2);
+
+	Nodes::Road_Node Node2;
+	Node2.set_pos(250, 300, 0, 2, 2);
+
+	Nodes::Road_Node Node3;
+	Node3.set_pos(450, 300, 0, 2, 2);
 
 	// Window_loop
 	while (window->isOpen()) 
@@ -44,7 +41,9 @@ int main()
 		// draw stuff
 		window->clear(Color::White);
 
-		bez.draw(window);
+		Node1.draw(window);
+		Node2.draw(window);
+		Node3.draw(window);
 
 		window->display();
 	}
