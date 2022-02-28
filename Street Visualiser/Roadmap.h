@@ -34,6 +34,7 @@ namespace Nodes
 		int pos_x = 0;
 		int pos_y = 0;
 
+		// calculate node Positions
 		void setup() {
 			for (int r = 1; r < r_Road_lanes + 1; r++) {
 				r_Road_conectors_x.push_back(pos_x - (double)sin(rotation * PI / 180) * road_width * r);
@@ -47,6 +48,7 @@ namespace Nodes
 		}
 
 		void set_pos(int x, int y, float rot, int r_lanes = 2, int l_lanes = 2) {
+			// set position, rotation and amount of lanes
 			pos_x = x;
 			pos_y = y;
 			rotation = rot;
@@ -74,7 +76,7 @@ namespace Nodes
 				win->draw(circle);
 			}
 
-			// --- draw keft side line connectors
+			// --- draw keft side line connectors --- //
 			for (int l = 0; l < l_Road_conectors_x.size(); l++) {
 				sf::CircleShape circle;
 				circle.setRadius(2);
@@ -96,10 +98,13 @@ namespace Nodes
 			y = pos_y;
 		}
 	};
+};
 
+namespace Curve
+{
 	class Bezier {
 	public:
-		vector<Node> Nodes = {};
+		vector<Nodes::Node> Nodes = {};
 
 		vector<int> curve_x = {};
 		vector<int> curve_y = {};
@@ -130,13 +135,13 @@ namespace Nodes
 			}
 		}
 
-		void add_Nodes(vector<Node> node) {
+		void add_Nodes(vector<Nodes::Node> node) {
 			for (int i = 0; i < node.size(); i++) {
 				Nodes.push_back(node[i]);
 			}
 		}
 
-		void add_Node(Node node) {
+		void add_Node(Nodes::Node node) {
 			Nodes.push_back(node);
 		}
 
@@ -159,7 +164,77 @@ namespace Nodes
 				bezier_curve.push_back(sf::Vertex(sf::Vector2f((int)curve_x[i], (int)curve_y[i]), sf::Color::Black));
 			}
 
-			win->draw(&bezier_curve[0], bezier_curve.size(), sf::LineStrip);
+			win->draw(&bezier_curve[0], bezier_curve.size(), sf::LinesStrip);
+		}
+	};
+};
+
+namespace Streets
+{
+	class Street {
+	public:
+		vector<Nodes::Road_Node> Nodes;
+
+		vector<Curve::Bezier> Beziers;
+
+		void add_Nodes(vector<Nodes::Road_Node> Road_Nodes) {
+			for (int i = 0; i < Road_Nodes.size(); i++) {
+				Nodes.push_back(Road_Nodes[i]);
+			}
+			cout << Nodes.size() << endl;
+		}
+
+		void add_Node(Nodes::Road_Node Road_Node) {
+			Nodes.push_back(Road_Node);
+		}
+
+		void generate_street() {
+			this->generate_bezier();
+		}
+
+		void generate_bezier() {
+			// --- generate center lane road marking --- //
+			Curve::Bezier center_Bez;
+			for (int res = 0; res < Nodes.size(); res++) {
+				Nodes::Node node;
+				node.set_pos(Nodes[res].pos_x, Nodes[res].pos_y);
+
+				center_Bez.add_Node(node);
+			}
+			center_Bez.create_bezier(100);
+			Beziers.push_back(center_Bez);
+
+			// --- generate right lane road markings --- //
+			for (int r = 0; r < Nodes[0].r_Road_lanes; r++) {
+				Curve::Bezier Bez;
+				for (int res = 0; res < Nodes.size(); res++) {
+					Nodes::Node node;
+					node.set_pos(Nodes[res].r_Road_conectors_x[r], Nodes[res].r_Road_conectors_y[r]);
+
+					Bez.add_Node(node);
+				}
+				Bez.create_bezier(100);
+				Beziers.push_back(Bez);
+			}
+
+			// --- generate left lane road markings --- //
+			for (int l = 0; l < Nodes[0].l_Road_lanes; l++) {
+				Curve::Bezier Bez;
+				for (int res = 0; res < Nodes.size(); res++) {
+					Nodes::Node node;
+					node.set_pos(Nodes[res].l_Road_conectors_x[l], Nodes[res].l_Road_conectors_y[l]);
+
+					Bez.add_Node(node);
+				}
+				Bez.create_bezier(100);
+				Beziers.push_back(Bez);
+			}
+		}
+
+		void draw(sf::RenderWindow* window) {
+			for (int i = 0; i < Beziers.size(); i++) {
+				Beziers[i].draw(window);
+			}
 		}
 	};
 };
