@@ -5,6 +5,7 @@
 #include <math.h>
 
 #define PI 3.14159265
+#define dash_length 10
 
 using namespace std;
 /* 
@@ -159,13 +160,48 @@ namespace Curve
 			}
 
 			// --- draw bezeier --- //
-			vector<sf::Vertex> bezier_curve;
-			for (int i = 0; i < curve_x.size(); i++) {
-				bezier_curve.push_back(sf::Vertex(sf::Vector2f((int)curve_x[i], (int)curve_y[i]), sf::Color::Black));
+			// solid line
+			if (line_style == 0) 
+			{
+				vector<sf::Vertex> bezier_curve;
+				for (int i = 0; i < curve_x.size(); i++) 
+				{
+					bezier_curve.push_back(sf::Vertex(sf::Vector2f((int)curve_x[i], (int)curve_y[i]), sf::Color::Black));
+				}
+
+				win->draw(&bezier_curve[0], bezier_curve.size(), sf::LinesStrip);
 			}
 
-			win->draw(&bezier_curve[0], bezier_curve.size(), sf::LinesStrip);
+			// dashed line
+			if (line_style == 1) 
+			{
+				vector<sf::Vertex> bezier_curve;
+				// --- calculate dashed lines --- //
+				float len = 0;
+				for (int i = 0; i < curve_x.size() - 1; i++) {
+					float seg_len = sqrt((curve_x[i] - curve_x[i + 1]) * (curve_x[i] - curve_x[i + 1]) + (curve_y[i] - curve_y[i + 1]) * (curve_y[i] - curve_y[i + 1]));
+					if (len + seg_len > dash_length) {
+						float delta_x = curve_x[i + 1] - curve_x[i];
+						float delta_y = curve_y[i + 1] - curve_y[i];
+						float x = delta_x / seg_len * (dash_length - len) + curve_x[i];
+						float y = delta_y / seg_len * (dash_length - len) + curve_y[i];
+						len = seg_len - (dash_length - len);
+						bezier_curve.push_back(sf::Vertex(sf::Vector2f((int)x, (int)y), sf::Color::Black));
+					}
+					else {
+						len += seg_len;
+					}
+				}
+				// --- add last point of bezier if need --- //
+				if (bezier_curve.size() % 2 == 1) {
+					bezier_curve.push_back(sf::Vertex(sf::Vector2f((int)curve_x[curve_x.size() - 1], (int)curve_y[curve_y.size() - 1]), sf::Color::Black));
+				}
+
+				// draw curve onto screen
+				win->draw(&bezier_curve[0], bezier_curve.size(), sf::Lines);
+			}
 		}
+
 	};
 };
 
@@ -181,7 +217,6 @@ namespace Streets
 			for (int i = 0; i < Road_Nodes.size(); i++) {
 				Nodes.push_back(Road_Nodes[i]);
 			}
-			cout << Nodes.size() << endl;
 		}
 
 		void add_Node(Nodes::Road_Node Road_Node) {
@@ -212,6 +247,11 @@ namespace Streets
 					node.set_pos(Nodes[res].r_Road_conectors_x[r], Nodes[res].r_Road_conectors_y[r]);
 
 					Bez.add_Node(node);
+
+					// turn lane into dashed lane
+					if (r < Nodes[0].r_Road_lanes - 1) {
+						Bez.line_style = 1;
+					}
 				}
 				Bez.create_bezier(100);
 				Beziers.push_back(Bez);
@@ -225,6 +265,11 @@ namespace Streets
 					node.set_pos(Nodes[res].l_Road_conectors_x[l], Nodes[res].l_Road_conectors_y[l]);
 
 					Bez.add_Node(node);
+
+					// turn lane into dashed lane
+					if (l < Nodes[0].l_Road_lanes - 1) {
+						Bez.line_style = 1;
+					}
 				}
 				Bez.create_bezier(100);
 				Beziers.push_back(Bez);
