@@ -113,7 +113,17 @@ namespace Curve
 		bool show_Bezier_Points = false;
 		int line_style = 0;
 
+		float get_length() {
+			float len = 0;
+			// loop through each segment
+			for (int i = 0; i < curve_x.size()-1; i++) {
+				len += sqrt((curve_x[i] - curve_x[i + 1]) * (curve_x[i] - curve_x[i + 1]) + (curve_y[i] - curve_y[i + 1]) * (curve_y[i] - curve_y[i + 1]));
+			}
+			return len;
+		}
+
 		void create_bezier(int substeps) {
+			// calculate multidimensional Bezier
 			for (int step = 0; step < substeps + 1; step++) {
 				vector<float> pos_x;
 				vector<float> pos_y;
@@ -133,6 +143,47 @@ namespace Curve
 				}
 				curve_x.push_back(pos_x[0] + ((pos_x[1] - pos_x[0]) / (float)substeps * (float)step));
 				curve_y.push_back(pos_y[0] + ((pos_y[1] - pos_y[0]) / (float)substeps * (float)step));
+			}
+
+			// define length of road marking
+			float length = this->get_length();
+			int dash_amount = ceil(length / (float)dash_length);
+			if (dash_amount % 2 == 1) {
+				dash_amount += 1;
+			}
+			float dash_len = length / (float)dash_amount;
+
+			// if line is dashed
+			if (line_style == 1) {
+				// new positions
+				vector<int> new_curve_x = { curve_x[0] };
+				vector<int> new_curve_y = { curve_y[0] };
+				// algorythem
+				int pos = 0;
+				float last_x = curve_x[0];
+				float last_y = curve_y[0];
+				while (pos < curve_x.size() - 1) {
+					float seg_len = sqrt((last_x - curve_x[pos + 1]) * (last_x - curve_x[pos + 1]) + (last_y - curve_y[pos + 1]) * (last_y - curve_y[pos + 1]));
+					if (dash_len < seg_len) {
+						float delta_x = curve_x[pos + 1] - last_x;
+						float delta_y = curve_y[pos + 1] - last_y;
+						last_x = delta_x / seg_len * dash_len + last_x;
+						last_y = delta_y / seg_len * dash_len + last_y;
+						new_curve_x.push_back(last_x);
+						new_curve_y.push_back(last_y);
+					}
+					else {
+						pos += 1;
+					}
+				}
+				// add last point of bezier if needed
+				if (new_curve_x.size() % 2 == 1) {
+					new_curve_x.push_back(curve_x[curve_x.size() - 1]);
+					new_curve_y.push_back(curve_y[curve_y.size() - 1]);
+				}
+				// put back values
+				curve_x = new_curve_x;
+				curve_y = new_curve_y;
 			}
 		}
 
@@ -161,47 +212,21 @@ namespace Curve
 
 			// --- draw bezeier --- //
 			// solid line
-			if (line_style == 0) 
+			vector<sf::Vertex> bezier_curve;
+			for (int i = 0; i < curve_x.size(); i++) 
 			{
-				vector<sf::Vertex> bezier_curve;
-				for (int i = 0; i < curve_x.size(); i++) 
-				{
-					bezier_curve.push_back(sf::Vertex(sf::Vector2f((int)curve_x[i], (int)curve_y[i]), sf::Color::Black));
-				}
-
-				win->draw(&bezier_curve[0], bezier_curve.size(), sf::LinesStrip);
+				bezier_curve.push_back(sf::Vertex(sf::Vector2f((int)curve_x[i], (int)curve_y[i]), sf::Color::Black));
 			}
 
+			// solid line 
+			if (line_style == 0) {
+				win->draw(&bezier_curve[0], bezier_curve.size(), sf::LinesStrip);
+			}
 			// dashed line
-			if (line_style == 1) 
-			{
-				vector<sf::Vertex> bezier_curve;
-				// --- calculate dashed lines --- //
-				float len = 0;
-				for (int i = 0; i < curve_x.size() - 1; i++) {
-					float seg_len = sqrt((curve_x[i] - curve_x[i + 1]) * (curve_x[i] - curve_x[i + 1]) + (curve_y[i] - curve_y[i + 1]) * (curve_y[i] - curve_y[i + 1]));
-					if (len + seg_len > dash_length) {
-						float delta_x = curve_x[i + 1] - curve_x[i];
-						float delta_y = curve_y[i + 1] - curve_y[i];
-						float x = delta_x / seg_len * (dash_length - len) + curve_x[i];
-						float y = delta_y / seg_len * (dash_length - len) + curve_y[i];
-						len = seg_len - (dash_length - len);
-						bezier_curve.push_back(sf::Vertex(sf::Vector2f((int)x, (int)y), sf::Color::Black));
-					}
-					else {
-						len += seg_len;
-					}
-				}
-				// --- add last point of bezier if need --- //
-				if (bezier_curve.size() % 2 == 1) {
-					bezier_curve.push_back(sf::Vertex(sf::Vector2f((int)curve_x[curve_x.size() - 1], (int)curve_y[curve_y.size() - 1]), sf::Color::Black));
-				}
-
-				// draw curve onto screen
+			if (line_style == 1) {
 				win->draw(&bezier_curve[0], bezier_curve.size(), sf::Lines);
 			}
 		}
-
 	};
 };
 
