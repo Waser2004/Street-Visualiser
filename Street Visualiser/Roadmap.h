@@ -21,7 +21,7 @@ namespace Nodes
 {
 	class Road_Node {
 	public:
-		int road_width = 10;
+		int road_width = 20;
 
 		int r_Road_lanes = 5;
 		int l_Road_lanes = 2;
@@ -236,7 +236,8 @@ namespace Streets
 	public:
 		vector<Nodes::Road_Node> Nodes;
 
-		vector<Curve::Bezier> Beziers;
+		Curve::Bezier Bezier;
+		vector<vector<sf::Vertex>> road_lanes;
 
 		void add_Nodes(vector<Nodes::Road_Node> Road_Nodes) {
 			for (int i = 0; i < Road_Nodes.size(); i++) {
@@ -253,57 +254,74 @@ namespace Streets
 		}
 
 		void generate_bezier() {
-			// --- generate center lane road marking --- //
-			Curve::Bezier center_Bez;
+			// create center road lane
 			for (int res = 0; res < Nodes.size(); res++) {
 				Nodes::Node node;
 				node.set_pos(Nodes[res].pos_x, Nodes[res].pos_y);
-
-				center_Bez.add_Node(node);
+				Bezier.add_Node(node);
 			}
-			center_Bez.create_bezier(100);
-			Beziers.push_back(center_Bez);
+			// generate bezier with resolution of 20
+			Bezier.create_bezier(20);
 
-			// --- generate right lane road markings --- //
-			for (int r = 0; r < Nodes[0].r_Road_lanes; r++) {
-				Curve::Bezier Bez;
-				for (int res = 0; res < Nodes.size(); res++) {
-					Nodes::Node node;
-					node.set_pos(Nodes[res].r_Road_conectors_x[r], Nodes[res].r_Road_conectors_y[r]);
-
-					Bez.add_Node(node);
-
-					// turn lane into dashed lane
-					if (r < Nodes[0].r_Road_lanes - 1) {
-						Bez.line_style = 1;
-					}
-				}
-				Bez.create_bezier(100);
-				Beziers.push_back(Bez);
+			// add Vertex ovectors to vector
+			for (int rl_lanes = 0; rl_lanes < Nodes[0].r_Road_lanes + Nodes[0].l_Road_lanes; rl_lanes++) {
+				vector<sf::Vertex> r_curve;
+				road_lanes.push_back(r_curve);
 			}
 
-			// --- generate left lane road markings --- //
-			for (int l = 0; l < Nodes[0].l_Road_lanes; l++) {
-				Curve::Bezier Bez;
-				for (int res = 0; res < Nodes.size(); res++) {
-					Nodes::Node node;
-					node.set_pos(Nodes[res].l_Road_conectors_x[l], Nodes[res].l_Road_conectors_y[l]);
-
-					Bez.add_Node(node);
-
-					// turn lane into dashed lane
-					if (l < Nodes[0].l_Road_lanes - 1) {
-						Bez.line_style = 1;
+			// loop thorough each position
+			for (int pos = 0; pos < Bezier.curve_x.size()-1; pos++) {
+				// get rotation of bezier section
+				float delta_x = Bezier.curve_x[pos + 1] - Bezier.curve_x[pos];
+				float delta_y = Bezier.curve_y[pos + 1] - Bezier.curve_y[pos];
+				float hyp = sqrt(delta_x * delta_x + delta_y * delta_y);
+				float rotation;
+				if (delta_y >= 0) {
+					rotation = asin(delta_x / hyp) * 180 / PI + 90;
+				}
+				else {
+					rotation = acos(delta_x / hyp) * 180 / PI;
+				}
+				// loop thorugh all lanes
+				for (int lanes = 0; lanes < max(Nodes[0].r_Road_lanes, Nodes[0].l_Road_lanes); lanes++) {
+					// creat curve for left lanes
+					if (lanes < Nodes[0].l_Road_lanes) {
+						int new_x = Bezier.curve_x[pos] - sin(rotation / 180 * PI) * (lanes + 1) * 20;
+						int new_y = Bezier.curve_y[pos] - cos(rotation / 180 * PI) * (lanes + 1) * 20;
+						road_lanes[lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+					}
+					// craete curve for right lanes
+					if (lanes < Nodes[0].r_Road_lanes) {
+						int new_x = Bezier.curve_x[pos] + sin(rotation / 180 * PI) * (lanes + 1) * 20;
+						int new_y = Bezier.curve_y[pos] + cos(rotation / 180 * PI) * (lanes + 1) * 20;
+						road_lanes[lanes + Nodes[0].l_Road_lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+					}
+					// add last postion
+					if (pos == Bezier.curve_x.size() - 2) {
+						// left side
+						if (lanes < Nodes[0].l_Road_lanes) {
+							float rotation = -Nodes[Nodes.size() - 1].rotation;
+							int new_x = Bezier.curve_x[Bezier.curve_x.size() - 1] - sin(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_y = Bezier.curve_y[Bezier.curve_x.size() - 1] - cos(rotation / 180 * PI) * (lanes + 1) * 20;
+							road_lanes[lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+						}
+						// right side
+						if (lanes < Nodes[0].r_Road_lanes) {
+							float rotation = -Nodes[Nodes.size() - 1].rotation;
+							int new_x = Bezier.curve_x[Bezier.curve_x.size() - 1] + sin(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_y = Bezier.curve_y[Bezier.curve_x.size() - 1] + cos(rotation / 180 * PI) * (lanes + 1) * 20;
+							road_lanes[lanes + Nodes[0].l_Road_lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+						}
 					}
 				}
-				Bez.create_bezier(100);
-				Beziers.push_back(Bez);
 			}
 		}
 
 		void draw(sf::RenderWindow* window) {
-			for (int i = 0; i < Beziers.size(); i++) {
-				Beziers[i].draw(window);
+			Bezier.draw(window);
+
+			for (int i = 0; i < road_lanes.size(); i++) {
+				window->draw(&road_lanes[i][0], road_lanes[i].size(), sf::LinesStrip);
 			}
 		}
 	};
