@@ -16,18 +16,12 @@ int main()
 
 	// create Street node
 	Nodes::Road_Node Node1;
-	Node1.set_pos(900, 200, -45, 3, 2);
+	Node1.set_pos(800, 200, 180, 3, 2);
 
 	Nodes::Road_Node Node2;
-	Node2.set_pos(700, 400, -45, 3, 2);
+	Node2.set_pos(200, 200, 0, 2, 3);
 
-	Nodes::Road_Node Node3;
-	Node3.set_pos(600, 600, 0, 3, 2);
-
-	Nodes::Road_Node Node4;
-	Node4.set_pos(200, 600, 10, 3, 2);
-
-	vector<Nodes::Road_Node> road_nodes = { Node1, Node2, Node3, Node4 };
+	vector<Nodes::Road_Node> road_nodes = { Node1, Node2 };
 	Streets::Street Street1;
 	Street1.add_Nodes(road_nodes);
 	Street1.generate_street();
@@ -51,8 +45,6 @@ int main()
 
 		Node1.draw(window);
 		Node2.draw(window);
-		Node3.draw(window);
-		Node4.draw(window);
 
 		Street1.draw(window);
 

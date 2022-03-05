@@ -98,6 +98,15 @@ namespace Nodes
 			x = pos_x;
 			y = pos_y;
 		}
+
+		void draw(sf::RenderWindow* win) {
+			sf::CircleShape circle;
+			circle.setRadius(4);
+			circle.setPosition((int)x - 2, (int)y - 2);
+			circle.setFillColor(sf::Color::Red);
+
+			win->draw(circle);
+		}
 	};
 };
 
@@ -235,18 +244,25 @@ namespace Streets
 	class Street {
 	public:
 		vector<Nodes::Road_Node> Nodes;
+		vector<Nodes::Node> supporting_Nodes;
 
 		Curve::Bezier Bezier;
 		vector<vector<sf::Vertex>> road_lanes;
 
 		void add_Nodes(vector<Nodes::Road_Node> Road_Nodes) {
 			for (int i = 0; i < Road_Nodes.size(); i++) {
+				if (Nodes.size() == 2) {
+					// remove first element
+					Nodes.erase(Nodes.begin());
+					supporting_Nodes.erase(supporting_Nodes.begin());
+				}
+				// add starting and ending point
 				Nodes.push_back(Road_Nodes[i]);
+				// add supporting nodes
+				Nodes::Node node;
+				node.set_pos(Road_Nodes[i].pos_x + 200 * sin((-Road_Nodes[i].rotation + 90) / 180 * PI), Road_Nodes[i].pos_y + 200 * cos((-Road_Nodes[i].rotation + 90) / 180 * PI));
+				supporting_Nodes.push_back(node);
 			}
-		}
-
-		void add_Node(Nodes::Road_Node Road_Node) {
-			Nodes.push_back(Road_Node);
 		}
 
 		void generate_street() {
@@ -255,11 +271,21 @@ namespace Streets
 
 		void generate_bezier() {
 			// create center road lane
-			for (int res = 0; res < Nodes.size(); res++) {
-				Nodes::Node node;
-				node.set_pos(Nodes[res].pos_x, Nodes[res].pos_y);
-				Bezier.add_Node(node);
+			// starting node
+			Nodes::Node node_s;
+			node_s.set_pos(Nodes[0].pos_x, Nodes[0].pos_y);
+			Bezier.add_Node(node_s);
+
+			// nodes in middle
+			for (int res = 0; res < supporting_Nodes.size(); res++) {
+				Bezier.add_Node(supporting_Nodes[res]);
 			}
+
+			// ending node
+			Nodes::Node node_e;
+			node_e.set_pos(Nodes[1].pos_x, Nodes[1].pos_y);
+			Bezier.add_Node(node_e);
+
 			// generate bezier with resolution of 20
 			Bezier.create_bezier(20);
 
@@ -284,32 +310,67 @@ namespace Streets
 				}
 				// loop thorugh all lanes
 				for (int lanes = 0; lanes < max(Nodes[0].r_Road_lanes, Nodes[0].l_Road_lanes); lanes++) {
-					// creat curve for left lanes
-					if (lanes < Nodes[0].l_Road_lanes) {
-						int new_x = Bezier.curve_x[pos] - sin(rotation / 180 * PI) * (lanes + 1) * 20;
-						int new_y = Bezier.curve_y[pos] - cos(rotation / 180 * PI) * (lanes + 1) * 20;
-						road_lanes[lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+					// add starting postion
+					if (pos == 0) {
+						// left side
+						if (lanes < Nodes[0].l_Road_lanes) {
+							float rotation = -Nodes[0].rotation;
+							int new_x = Bezier.curve_x[0] - sin(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_y = Bezier.curve_y[0] - cos(rotation / 180 * PI) * (lanes + 1) * 20;
+							road_lanes[lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+						}
+						// right side
+						if (lanes < Nodes[0].r_Road_lanes) {
+							float rotation = -Nodes[0].rotation;
+							int new_x = Bezier.curve_x[0] + sin(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_y = Bezier.curve_y[0] + cos(rotation / 180 * PI) * (lanes + 1) * 20;
+							road_lanes[lanes + Nodes[0].l_Road_lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+						}
 					}
-					// craete curve for right lanes
-					if (lanes < Nodes[0].r_Road_lanes) {
-						int new_x = Bezier.curve_x[pos] + sin(rotation / 180 * PI) * (lanes + 1) * 20;
-						int new_y = Bezier.curve_y[pos] + cos(rotation / 180 * PI) * (lanes + 1) * 20;
-						road_lanes[lanes + Nodes[0].l_Road_lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+					// check if rotation is negative
+					if (rotation <= 0) {
+						// creat curve for left lanes
+						if (lanes < Nodes[0].l_Road_lanes) {
+							int new_x = Bezier.curve_x[pos] + sin(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_y = Bezier.curve_y[pos] + cos(rotation / 180 * PI) * (lanes + 1) * 20;
+							road_lanes[lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+						}
+						// craete curve for right lanes
+						if (lanes < Nodes[0].r_Road_lanes) {
+							int new_x = Bezier.curve_x[pos] - sin(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_y = Bezier.curve_y[pos] - cos(rotation / 180 * PI) * (lanes + 1) * 20;
+							road_lanes[lanes + Nodes[0].l_Road_lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+						}
+					}
+					// check if rotation is positive
+					else {
+						// creat curve for left lanes
+						if (lanes < Nodes[0].l_Road_lanes) {
+							int new_x = Bezier.curve_x[pos] - sin(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_y = Bezier.curve_y[pos] - cos(rotation / 180 * PI) * (lanes + 1) * 20;
+							road_lanes[lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+						}
+						// craete curve for right lanes
+						if (lanes < Nodes[0].r_Road_lanes) {
+							int new_x = Bezier.curve_x[pos] + sin(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_y = Bezier.curve_y[pos] + cos(rotation / 180 * PI) * (lanes + 1) * 20;
+							road_lanes[lanes + Nodes[0].l_Road_lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
+						}
 					}
 					// add last postion
 					if (pos == Bezier.curve_x.size() - 2) {
 						// left side
 						if (lanes < Nodes[0].l_Road_lanes) {
 							float rotation = -Nodes[Nodes.size() - 1].rotation;
-							int new_x = Bezier.curve_x[Bezier.curve_x.size() - 1] - sin(rotation / 180 * PI) * (lanes + 1) * 20;
-							int new_y = Bezier.curve_y[Bezier.curve_x.size() - 1] - cos(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_x = Bezier.curve_x[Bezier.curve_x.size() - 1] + sin(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_y = Bezier.curve_y[Bezier.curve_x.size() - 1] + cos(rotation / 180 * PI) * (lanes + 1) * 20;
 							road_lanes[lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
 						}
 						// right side
 						if (lanes < Nodes[0].r_Road_lanes) {
 							float rotation = -Nodes[Nodes.size() - 1].rotation;
-							int new_x = Bezier.curve_x[Bezier.curve_x.size() - 1] + sin(rotation / 180 * PI) * (lanes + 1) * 20;
-							int new_y = Bezier.curve_y[Bezier.curve_x.size() - 1] + cos(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_x = Bezier.curve_x[Bezier.curve_x.size() - 1] - sin(rotation / 180 * PI) * (lanes + 1) * 20;
+							int new_y = Bezier.curve_y[Bezier.curve_x.size() - 1] - cos(rotation / 180 * PI) * (lanes + 1) * 20;
 							road_lanes[lanes + Nodes[0].l_Road_lanes].push_back(sf::Vertex(sf::Vector2f(new_x, new_y), sf::Color::Black));
 						}
 					}
@@ -322,6 +383,10 @@ namespace Streets
 
 			for (int i = 0; i < road_lanes.size(); i++) {
 				window->draw(&road_lanes[i][0], road_lanes[i].size(), sf::LinesStrip);
+			}
+
+			for (int i = 0; i < supporting_Nodes.size(); i++) {
+				supporting_Nodes[i].draw(window);
 			}
 		}
 	};

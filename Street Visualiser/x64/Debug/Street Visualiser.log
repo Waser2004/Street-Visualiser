@@ -27,8 +27,10 @@ C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(84,73)
 C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(84,46): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
 C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(98,8): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
 C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(99,8): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(120,16): warning C4244: "+=": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(144,32): warning C4244: "Argument": Konvertierung von "_Ty" in "_Ty", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(105,42): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(105,30): warning C4244: "Argument": Konvertierung von "int" in "float", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(129,16): warning C4244: "+=": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(153,32): warning C4244: "Argument": Konvertierung von "_Ty" in "_Ty", möglicher Datenverlust
           with
           [
               _Ty=float
@@ -37,7 +39,7 @@ C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(144,32
           [
               _Ty=int
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(145,32): warning C4244: "Argument": Konvertierung von "_Ty" in "_Ty", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(154,32): warning C4244: "Argument": Konvertierung von "_Ty" in "_Ty", möglicher Datenverlust
           with
           [
               _Ty=float
@@ -46,93 +48,143 @@ C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(145,32
           [
               _Ty=int
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(150,20): warning C4244: "Initialisierung": Konvertierung von "float" in "int", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(163,18): warning C4244: "Initialisierung": Konvertierung von "_Ty" in "float", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(159,20): warning C4244: "Initialisierung": Konvertierung von "float" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(172,18): warning C4244: "Initialisierung": Konvertierung von "_Ty" in "float", möglicher Datenverlust
           with
           [
               _Ty=int
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(164,18): warning C4244: "Initialisierung": Konvertierung von "_Ty" in "float", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(173,18): warning C4244: "Initialisierung": Konvertierung von "_Ty" in "float", möglicher Datenverlust
           with
           [
               _Ty=int
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(172,29): warning C4244: "Argument": Konvertierung von "float" in "_Ty", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(181,29): warning C4244: "Argument": Konvertierung von "float" in "_Ty", möglicher Datenverlust
           with
           [
               _Ty=int
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(173,29): warning C4244: "Argument": Konvertierung von "float" in "_Ty", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(182,29): warning C4244: "Argument": Konvertierung von "float" in "_Ty", möglicher Datenverlust
           with
           [
               _Ty=int
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(218,83): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(227,83): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(218,66): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(227,66): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(275,19): warning C4244: "Initialisierung": Konvertierung von "_Ty" in "float", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(263,114): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(263,38): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(301,19): warning C4244: "Initialisierung": Konvertierung von "_Ty" in "float", möglicher Datenverlust
           with
           [
               _Ty=int
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(276,19): warning C4244: "Initialisierung": Konvertierung von "_Ty" in "float", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(302,19): warning C4244: "Initialisierung": Konvertierung von "_Ty" in "float", möglicher Datenverlust
           with
           [
               _Ty=int
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(280,48): warning C4244: "=": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(283,43): warning C4244: "=": Konvertierung von "double" in "float", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(289,17): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(290,17): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(291,66): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(306,48): warning C4244: "=": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(309,43): warning C4244: "=": Konvertierung von "double" in "float", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(318,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(319,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(320,67): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(291,59): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(320,60): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(295,17): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(296,17): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(297,90): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(325,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(326,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(327,91): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(297,83): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(327,84): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(304,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(305,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(306,67): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(334,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(335,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(336,67): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(306,60): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(336,60): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(311,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(312,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(313,91): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(340,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(341,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(342,91): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
           ]
-C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(313,84): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(342,84): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(349,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(350,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(351,67): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(351,60): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(355,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(356,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(357,91): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(357,84): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(365,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(366,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(367,67): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(367,60): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(372,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(373,18): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(374,91): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
+          with
+          [
+              T=float
+          ]
+C:\Users\nicow\source\repos\Street Visualiser\Street Visualiser\Roadmap.h(374,84): warning C4244: "Argument": Konvertierung von "int" in "T", möglicher Datenverlust
           with
           [
               T=float
